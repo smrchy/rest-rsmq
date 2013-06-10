@@ -1,0 +1,37 @@
+{
+    "name": "rest-rsmq",
+    "description": "A RESTful interface for rsmq",
+    "version": "0.1.0",
+    "author": "P. Liess <smrchy+npm@gmail.com>",
+    "engines": {
+		"node": "> 0.8.10"
+	},
+	"scripts": {
+		"test": "mocha ./test/test.js"
+	},
+	"dependencies": {
+		"hiredis": "*",
+		"redis": "*",
+		"express": "*",
+		"underscore": "*",
+		"rsmq": "*"
+	},
+	"devDependencies": {
+		"mocha": "*",
+		"should": "*",
+		"async": "*"
+	},
+	"keywords": [
+		"rest",
+		"restful",
+		"rsmq",
+		"queue",
+		"messagequeue",
+		"redis"
+	],	
+	"repository" : {
+		"type": "git",
+		"url": "http://github.com/smrchy/rest-rsmq.git"
+	}
+
+}
