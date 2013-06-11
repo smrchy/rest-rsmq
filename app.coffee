@@ -33,9 +33,25 @@ app.configure ->
 
 
 
+app.get '/queues', (req, res) ->
+	rsmq.listQueues (err, resp) ->
+		if err
+			res.send(err, 500)
+			return
+		res.send({queues: resp})
+		return
 
 
-app.post '/queue/:qname', (req, res) ->
+app.get '/queues/:qname', (req, res) ->
+	rsmq.getQueueAttributes {qname: req.params.qname}, (err, resp) ->
+		if err
+			res.send(err, 500)
+			return
+		res.send(resp)
+		return
+
+
+app.post '/queues/:qname', (req, res) ->
 	params = req.body
 	params.qname = req.params.qname
 	rsmq.createQueue params, (err, resp) ->
@@ -47,7 +63,7 @@ app.post '/queue/:qname', (req, res) ->
 	return
 	
 
-app.delete '/queue/:qname', (req, res) ->
+app.delete '/queues/:qname', (req, res) ->
 	rsmq.deleteQueue {qname: req.params.qname}, (err, resp) ->
 		if err
 			res.send(err, 500)
@@ -56,7 +72,7 @@ app.delete '/queue/:qname', (req, res) ->
 		return
 
 
-app.post '/message/:qname', (req, res) ->
+app.post '/messages/:qname', (req, res) ->
 	params = req.body
 	params.qname = req.params.qname
 	rsmq.sendMessage params, (err, resp) ->
@@ -68,7 +84,7 @@ app.post '/message/:qname', (req, res) ->
 	return
 
 
-app.get '/message/:qname', (req, res) ->
+app.get '/messages/:qname', (req, res) ->
 	rsmq.receiveMessage {qname: req.params.qname, vt: req.param("vt")}, (err, resp) ->
 		if err
 			res.send(err, 500)
@@ -77,7 +93,17 @@ app.get '/message/:qname', (req, res) ->
 		return
 	return
 
-app.delete '/message/:qname/:id', (req, res) ->
+app.put '/messages/:qname/:id', (req, res) ->
+	rsmq.changeMessageVisibility {qname: req.params.qname, id: req.params.id, vt: req.param("vt")}, (err, resp) ->
+		if err
+			res.send(err, 500)
+			return
+		res.send({result:resp})
+		return
+	return
+
+
+app.delete '/messages/:qname/:id', (req, res) ->
 	rsmq.deleteMessage req.params, (err, resp) ->
 		if err
 			res.send(err, 500)

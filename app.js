@@ -36,7 +36,31 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     app.use(express.bodyParser());
   });
 
-  app.post('/queue/:qname', function(req, res) {
+  app.get('/queues', function(req, res) {
+    return rsmq.listQueues(function(err, resp) {
+      if (err) {
+        res.send(err, 500);
+        return;
+      }
+      res.send({
+        queues: resp
+      });
+    });
+  });
+
+  app.get('/queues/:qname', function(req, res) {
+    return rsmq.getQueueAttributes({
+      qname: req.params.qname
+    }, function(err, resp) {
+      if (err) {
+        res.send(err, 500);
+        return;
+      }
+      res.send(resp);
+    });
+  });
+
+  app.post('/queues/:qname', function(req, res) {
     var params;
 
     params = req.body;
@@ -52,7 +76,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     });
   });
 
-  app["delete"]('/queue/:qname', function(req, res) {
+  app["delete"]('/queues/:qname', function(req, res) {
     return rsmq.deleteQueue({
       qname: req.params.qname
     }, function(err, resp) {
@@ -66,7 +90,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     });
   });
 
-  app.post('/message/:qname', function(req, res) {
+  app.post('/messages/:qname', function(req, res) {
     var params;
 
     params = req.body;
@@ -82,7 +106,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     });
   });
 
-  app.get('/message/:qname', function(req, res) {
+  app.get('/messages/:qname', function(req, res) {
     rsmq.receiveMessage({
       qname: req.params.qname,
       vt: req.param("vt")
@@ -95,7 +119,23 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     });
   });
 
-  app["delete"]('/message/:qname/:id', function(req, res) {
+  app.put('/messages/:qname/:id', function(req, res) {
+    rsmq.changeMessageVisibility({
+      qname: req.params.qname,
+      id: req.params.id,
+      vt: req.param("vt")
+    }, function(err, resp) {
+      if (err) {
+        res.send(err, 500);
+        return;
+      }
+      res.send({
+        result: resp
+      });
+    });
+  });
+
+  app["delete"]('/messages/:qname/:id', function(req, res) {
     rsmq.deleteMessage(req.params, function(err, resp) {
       if (err) {
         res.send(err, 500);

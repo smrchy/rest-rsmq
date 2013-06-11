@@ -1,7 +1,7 @@
 {
     "name": "rest-rsmq",
     "description": "A RESTful interface for rsmq",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "author": "P. Liess <smrchy+npm@gmail.com>",
     "engines": {
 		"node": "> 0.8.10"
@@ -27,6 +27,8 @@
 		"rsmq",
 		"queue",
 		"messagequeue",
+		"sqs",
+		"aws",
 		"redis"
 	],	
 	"repository" : {

@@ -3,7 +3,7 @@
 [![Build Status](https://secure.travis-ci.org/smrchy/rest-rsmq.png?branch=master)](http://travis-ci.org/smrchy/rest-rsmq)
 
 
-A REST interface for [rsmq](https://github.com/smrchy/rsmq).
+A REST interface for [rsmq](https://github.com/smrchy/rsmq) the really simple message queue based on Redis.
 
 This REST interface makes it easy to use [rsmq](https://github.com/smrchy/rsmq) with other application platforms like php, .net etc. Simply call the RESTful methods to send and receive messages.
 
@@ -12,8 +12,9 @@ This REST interface makes it easy to use [rsmq](https://github.com/smrchy/rsmq) 
 
 ## Installation
 
+* Make sure Node 0.8.10+ is installed
 * Clone this repository
-* Run `npm install` to install the dependencies.
+* Run `npm install` to install the dependencies
 * For the test make sure Redis runs locally and run `npm test`
 * *Optional:* Modify the server port in server.js
 * Start the server: `node server.js`
@@ -21,8 +22,28 @@ This REST interface makes it easy to use [rsmq](https://github.com/smrchy/rsmq) 
 
 ## Methods
 
+### changeMessageVisibility
 
-### POST /queue/:qname
+**PUT /message/qname/id**
+
+Change the visibility of the message with id `id` from queue `qname`.
+
+Example:
+
+```
+PUT /message/myqueue/dhxekddac921a9422ec10e5439b55aa62e4dd49142?vt=5
+```
+
+Response:
+
+```
+{"result": 1}
+```
+
+
+### createQueue
+
+**POST /queues/qname**
 
 Create a new queue `qname`
 
@@ -49,12 +70,31 @@ Content-Type: application/json
 Response:
 
 ```
-{"result": "1"}
+{"result": 1}
+```
 
+### deleteMessage
+
+**DELETE /message/qname/id**
+
+Delete the message with id `id` from queue `qname`.
+
+Example:
+
+```
+DELETE /message/myqueue/dhxekddac921a9422ec10e5439b55aa62e4dd49142
+```
+
+Response:
+
+```
+{"result": 1}
 ```
 
 
-### DELETE /queue/:qname
+### deleteQueue
+
+**DELETE /queues/qname**
 
 Delete the queue `qname` and all messages in that queue.
 
@@ -67,34 +107,31 @@ DELETE /queue/myqueue
 Response:
 
 ```
-{"result": "1"}
+{"result": 1}
 ```
 
-### POST /message/:qname
+### listQueues
 
-Sends a new message.
+**GET /queues**
+
+Delete the queue `qname` and all messages in that queue.
 
 Example:
 
 ```
-POST /message/myqueue
-Content-Type: application/json
-
-{
-	"message": "Hello World!",
-	"delay": 0
-}
+GET /queues
 ```
 
-Response: 
+Response:
 
 ```
-{
-    "id": "dhxekddac921a9422ec10e5439b55aa62e4dd49142"
-}
+{"queues": ["myqueue","someOtherQueue"]}
 ```
 
-### GET /message/:qname
+
+### receiveMessage
+
+**GET /message/qname**
 
 Receive the next message from the queue.
 
@@ -119,3 +156,43 @@ Response:
     "sent": 1370855815832
 }
 ```
+
+### sendMessage
+
+**POST /message/qname**
+
+Sends a new message.
+
+Example:
+
+```
+POST /message/myqueue
+Content-Type: application/json
+
+{
+	"message": "Hello World!",
+	"delay": 0
+}
+```
+
+Response: 
+
+```
+{
+    "id": "dhxekddac921a9422ec10e5439b55aa62e4dd49142"
+}
+```
+
+
+
+## The MIT License (MIT)
+
+Copyright © 2013 Patrick Liess, http://www.tcs.de
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
