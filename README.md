@@ -57,7 +57,7 @@ Parameters:
 Example:
 
 ```
-POST /queue/myqueue
+POST /queues/myqueue
 Content-Type: application/json
 
 {
@@ -75,14 +75,14 @@ Response:
 
 ### deleteMessage
 
-**DELETE /message/qname/id**
+**DELETE /messages/qname/id**
 
 Delete the message with id `id` from queue `qname`.
 
 Example:
 
 ```
-DELETE /message/myqueue/dhxekddac921a9422ec10e5439b55aa62e4dd49142
+DELETE /messages/myqueue/dhxekddac921a9422ec10e5439b55aa62e4dd49142
 ```
 
 Response:
@@ -101,7 +101,7 @@ Delete the queue `qname` and all messages in that queue.
 Example:
 
 ```
-DELETE /queue/myqueue
+DELETE /queues/myqueue
 ```
 
 Response:
@@ -110,11 +110,44 @@ Response:
 {"result": 1}
 ```
 
+
+### getQueueAttributes
+
+Get queue attributes, counter and stats
+
+Parameters:
+
+* `qname` (String): The Queue name.
+
+Example:
+
+```
+GET /queues/myqueue
+```
+
+Response:
+
+```
+{
+    "vt": 30,
+    "delay": 0,
+    "maxsize": 65536,
+    "totalrecv": 32,
+    "totalsent": 13,
+    "created": 1371645477,
+    "modified": 1371645477,
+    "msgs": 4,
+    "hiddenmsgs": 2
+}
+```
+
+
+
 ### listQueues
 
 **GET /queues**
 
-Delete the queue `qname` and all messages in that queue.
+List all queues.
 
 Example:
 
@@ -131,7 +164,7 @@ Response:
 
 ### receiveMessage
 
-**GET /message/qname**
+**GET /messages/qname**
 
 Receive the next message from the queue.
 
@@ -142,7 +175,7 @@ Parameters:
 Example:
 
 ```
-GET /message/myqueue?vt=30
+GET /messages/myqueue?vt=30
 ```
 
 Response:
@@ -159,14 +192,14 @@ Response:
 
 ### sendMessage
 
-**POST /message/qname**
+**POST /messages/qname**
 
 Sends a new message.
 
 Example:
 
 ```
-POST /message/myqueue
+POST /messages/myqueue
 Content-Type: application/json
 
 {

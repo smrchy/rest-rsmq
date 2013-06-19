@@ -1,7 +1,7 @@
 {
     "name": "rest-rsmq",
     "description": "A RESTful interface for rsmq",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "author": "P. Liess <smrchy+npm@gmail.com>",
     "engines": {
 		"node": "> 0.8.10"
