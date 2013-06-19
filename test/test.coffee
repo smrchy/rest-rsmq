@@ -39,7 +39,7 @@ describe 'REST-rsmq Test', ->
 			.end (resp) ->
 				resp.statusCode.should.equal(200)
 				body = JSON.parse(resp.body)
-				body.id.length.should.equal(42)
+				body.id.length.should.equal(32)
 				m1 = body.id
 				done()
 			return
@@ -52,7 +52,7 @@ describe 'REST-rsmq Test', ->
 			.end (resp) ->
 				resp.statusCode.should.equal(200)
 				body = JSON.parse(resp.body)
-				body.id.length.should.equal(42)
+				body.id.length.should.equal(32)
 				m2 = body.id
 				done()
 			return

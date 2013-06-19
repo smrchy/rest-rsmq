@@ -46,7 +46,7 @@
 
         resp.statusCode.should.equal(200);
         body = JSON.parse(resp.body);
-        body.id.length.should.equal(42);
+        body.id.length.should.equal(32);
         m1 = body.id;
         return done();
       });
@@ -61,7 +61,7 @@
 
         resp.statusCode.should.equal(200);
         body = JSON.parse(resp.body);
-        body.id.length.should.equal(42);
+        body.id.length.should.equal(32);
         m2 = body.id;
         return done();
       });
