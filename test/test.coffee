@@ -146,7 +146,7 @@ describe 'REST-rsmq Test', ->
 		http.request().get('/queues').end (resp) ->
 			resp.statusCode.should.equal(200)
 			body = JSON.parse(resp.body)
-			body.queues.should.include(q1)
+			body.queues.should.containEql(q1)
 			done()
 			return
 		return
