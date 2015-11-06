@@ -1,20 +1,20 @@
 {
     "name": "rest-rsmq",
     "description": "A RESTful interface for rsmq",
-    "version": "0.3.5",
+    "version": "0.4.0",
     "author": "P. Liess <smrchy+npm@gmail.com>",
     "engines": {
-		"node": "> 0.8.10"
+		"node": "> 0.10.20"
 	},
 	"scripts": {
 		"test": "mocha ./test/test.js"
 	},
 	"dependencies": {
 		"express": "<4.0",
-		"underscore": "*",
-		"rsmq": "*"
+		"rsmq": "0.4.0"
 	},
 	"devDependencies": {
+		"underscore": "*",
 		"mocha": "*",
 		"should": "*",
 		"async": "*"
