@@ -1,7 +1,7 @@
 {
     "name": "rest-rsmq",
     "description": "A RESTful interface for rsmq",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "author": "P. Liess <smrchy+npm@gmail.com>",
     "engines": {
 		"node": "> 0.10.20"
@@ -11,7 +11,7 @@
 	},
 	"dependencies": {
 		"express": "<4.0",
-		"rsmq": "0.4.0"
+		"rsmq": "0.7.2"
 	},
 	"devDependencies": {
 		"underscore": "*",
