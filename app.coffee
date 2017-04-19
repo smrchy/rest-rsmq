@@ -75,6 +75,7 @@ app.delete '/queues/:qname', (req, res) ->
 app.post '/messages/:qname', (req, res) ->
 	params = req.body
 	params.qname = req.params.qname
+	params.message = JSON.stringify req.params.message if req.params.message?
 	rsmq.sendMessage params, (err, resp) ->
 		if err
 			res.send(err, 500)
